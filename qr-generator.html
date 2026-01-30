@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - NenoTools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-toolbox"></i>
+                <span>NenoTools</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="converter-container">
+        <div class="converter-header">
+            <h1>QR Code Generator</h1>
+            <p>Generate QR codes for texts, URLs, and more</p>
+        </div>
+
+        <div class="converter-card">
+            <div class="error"><p>Error message</p></div>
+            <div class="success"><p>Success message</p></div>
+
+            <div class="controls">
+                <div class="control-group" style="flex: 1; min-width: 100%;">
+                    <label for="qrtext">Text or URL</label>
+                    <textarea id="qrtext" name="qrtext" placeholder="Enter text or URL..." style="min-height: 80px; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--radius); font-family: inherit;"></textarea>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="size">QR Code Size</label>
+                    <select id="size" name="size">
+                        <option value="200">Small (200px)</option>
+                        <option value="300">Medium (300px)</option>
+                        <option value="500" selected>Large (500px)</option>
+                        <option value="800">Extra Large (800px)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="color">QR Color</label>
+                    <input type="color" id="color" name="color" value="#000000">
+                </div>
+                <div class="control-group">
+                    <label for="bgcolor">Background Color</label>
+                    <input type="color" id="bgcolor" name="bgcolor" value="#ffffff">
+                </div>
+            </div>
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Generating QR code...</p>
+            </div>
+
+            <div class="preview-area" style="text-align: center; padding: 2rem;"></div>
+
+            <div class="result-area">
+                <h3><i class="fas fa-check-circle"></i> QR Code Generated!</h3>
+                <p>Your QR code is ready to use</p>
+                <button class="btn btn-upload generate-qr-btn">Generate</button>
+                <button class="btn btn-upload download-btn" style="margin-top: 1rem;">Download</button>
+            </div>
+
+            <div class="button-group" id="buttonGroup">
+                <button class="btn btn-primary generate-qr-btn">Generate QR Code</button>
+                <button class="btn btn-secondary" onclick="resetConverter()">Reset</button>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> About QR Codes</h4>
+                <p>QR codes are machine-readable codes that can store text, URLs, contact information, and more. They're widely used for marketing, payment systems, and information sharing. Simply scan with any smartphone camera to access the encoded content. Customize colors to match your brand!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NenoTools</h4>
+                    <p>Your trusted online tools platform</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NenoTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initQRGenerator();
+        });
+
+        function resetConverter() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

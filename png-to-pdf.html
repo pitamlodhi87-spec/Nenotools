@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG to PDF Converter - NenoTools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-toolbox"></i>
+                <span>NenoTools</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="converter-container">
+        <div class="converter-header">
+            <h1>PNG to PDF Converter</h1>
+            <p>Convert PNG images to PDF documents instantly</p>
+        </div>
+
+        <div class="converter-card">
+            <div class="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    <h3>Click to upload or drag and drop</h3>
+                    <p>PNG, JPG, JPEG, GIF, WEBP (Max 50MB)</p>
+                </div>
+                <input type="file" class="file-input" accept="image/*">
+            </div>
+
+            <div class="error"><p>Error message</p></div>
+            <div class="success"><p>Success message</p></div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="pagesize">Page Size</label>
+                    <select id="pagesize" name="pagesize">
+                        <option value="letter">Letter (8.5 x 11)</option>
+                        <option value="a4" selected>A4 (210 x 297mm)</option>
+                        <option value="a3">A3 (297 x 420mm)</option>
+                        <option value="legal">Legal (8.5 x 14)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="margin">Margin (mm)</label>
+                    <input type="number" id="margin" name="margin" value="10" min="0" max="50">
+                </div>
+            </div>
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Converting to PDF...</p>
+            </div>
+
+            <div class="preview-area"></div>
+
+            <div class="result-area">
+                <h3><i class="fas fa-check-circle"></i> Conversion Complete!</h3>
+                <p>Your image has been successfully converted to PDF</p>
+                <button class="btn btn-upload convert-btn">Convert</button>
+                <button class="btn btn-upload download-btn" style="margin-top: 1rem;">Download PDF</button>
+            </div>
+
+            <div class="button-group" id="buttonGroup">
+                <button class="btn btn-primary convert-btn">Convert to PDF</button>
+                <button class="btn btn-secondary" onclick="resetConverter()">Reset</button>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> About PNG to PDF Conversion</h4>
+                <p>Convert your PNG images into professional PDF documents. PDF is a universal format that preserves formatting and is compatible with any device. You can customize the page size and margins to fit your needs.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NenoTools</h4>
+                    <p>Your trusted online tools platform</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NenoTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        class PDFConverter {
+            constructor() {
+                this.uploadArea = document.querySelector('.upload-area');
+                this.fileInput = document.querySelector('.file-input');
+                this.previewArea = document.querySelector('.preview-area');
+                this.resultArea = document.querySelector('.result-area');
+                this.loadingArea = document.querySelector('.loading');
+                this.errorArea = document.querySelector('.error');
+                this.successArea = document.querySelector('.success');
+                this.convertBtn = document.querySelector('.convert-btn');
+                this.downloadBtn = document.querySelector('.download-btn');
+                this.pageSizeSelect = document.querySelector('[name="pagesize"]');
+                this.marginInput = document.querySelector('[name="margin"]');
+                this.selectedFile = null;
+                this.pdfData = null;
+
+                this.init();
+            }
+
+            init() {
+                this.uploadArea.addEventListener('click', () => this.fileInput.click());
+                this.uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.uploadArea.classList.add('drag-over');
+                });
+                this.uploadArea.addEventListener('dragleave', () => this.uploadArea.classList.remove('drag-over'));
+                this.uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
+                this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+                this.convertBtn.addEventListener('click', () => this.convert());
+                this.downloadBtn.addEventListener('click', () => this.download());
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.uploadArea.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    this.fileInput.files = files;
+                    this.handleFileSelect({ target: { files } });
+                }
+            }
+
+            handleFileSelect(e) {
+                const files = e.target.files;
+                if (files.length > 0) {
+                    this.selectedFile = files[0];
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            this.previewArea.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+                            const uploadText = this.uploadArea.querySelector('.upload-text');
+                            uploadText.innerHTML = `<h3>✓ File Selected</h3><p>${this.selectedFile.name}</p>`;
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(this.selectedFile);
+                }
+            }
+
+            async convert() {
+                if (!this.selectedFile) {
+                    this.showError('Please select an image');
+                    return;
+                }
+
+                this.loadingArea.classList.add('active');
+
+                try {
+                    const img = this.previewArea.querySelector('img');
+                    const element = document.createElement('div');
+                    const imgElement = document.createElement('img');
+                    imgElement.src = img.src;
+                    element.appendChild(imgElement);
+
+                    const pageSize = this.pageSizeSelect.value;
+                    const margin = this.marginInput.value;
+
+                    const options = {
+                        margin: margin,
+                        filename: 'converted.pdf',
+                        image: { type: 'png', quality: 0.98 },
+                        html2canvas: { scale: 2 },
+                        jsPDF: { orientation: 'portrait', unit: 'mm', format: pageSize }
+                    };
+
+                    html2pdf().set(options).from(element).toPdf().get('pdf').then((pdf) => {
+                        this.pdfData = pdf;
+                        this.loadingArea.classList.remove('active');
+                        this.showSuccess('Successfully converted to PDF!');
+                        this.resultArea.classList.add('active');
+                        document.getElementById('buttonGroup').style.display = 'none';
+                    });
+                } catch (error) {
+                    this.showError('Conversion failed: ' + error.message);
+                }
+            }
+
+            download() {
+                if (this.pdfData) {
+                    this.pdfData.save('converted.pdf');
+                }
+            }
+
+            showError(message) {
+                this.errorArea.querySelector('p').textContent = message;
+                this.errorArea.classList.add('active');
+            }
+
+            showSuccess(message) {
+                this.successArea.querySelector('p').textContent = message;
+                this.successArea.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new PDFConverter();
+        });
+
+        function resetConverter() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

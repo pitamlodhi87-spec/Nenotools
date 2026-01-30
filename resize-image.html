@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resize Image - NenoTools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-toolbox"></i>
+                <span>NenoTools</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="converter-container">
+        <div class="converter-header">
+            <h1>Resize Image</h1>
+            <p>Resize your images to any custom dimensions</p>
+        </div>
+
+        <div class="converter-card">
+            <div class="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    <h3>Click to upload or drag and drop</h3>
+                    <p>PNG, JPG, JPEG, GIF, WEBP (Max 50MB)</p>
+                </div>
+                <input type="file" class="file-input" accept="image/*">
+            </div>
+
+            <div class="error"><p>Error message</p></div>
+            <div class="success"><p>Success message</p></div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="width">Width (px)</label>
+                    <input type="number" id="width" name="width" placeholder="800" min="1">
+                </div>
+                <div class="control-group">
+                    <label for="height">Height (px)</label>
+                    <input type="number" id="height" name="height" placeholder="600" min="1">
+                </div>
+                <div class="control-group" style="display: flex; align-items: flex-end;">
+                    <button class="btn btn-secondary toggle-aspect-ratio" title="Lock aspect ratio">
+                        <i class="fas fa-lock"></i> Lock Ratio
+                    </button>
+                </div>
+            </div>
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Resizing your image...</p>
+            </div>
+
+            <div class="preview-area"></div>
+
+            <div class="result-area">
+                <h3><i class="fas fa-check-circle"></i> Resize Complete!</h3>
+                <p>Your image has been successfully resized</p>
+                <button class="btn btn-upload resize-btn">Resize</button>
+                <button class="btn btn-upload download-btn" style="margin-top: 1rem;">Download</button>
+            </div>
+
+            <div class="button-group" id="buttonGroup">
+                <button class="btn btn-primary resize-btn">Resize Image</button>
+                <button class="btn btn-secondary" onclick="resetConverter()">Reset</button>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> About Image Resizing</h4>
+                <p>Resize your images to specific dimensions for use on websites, social media, or other applications. You can lock the aspect ratio to prevent distortion, or set custom dimensions. Perfect for batch processing and standardizing image sizes.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NenoTools</h4>
+                    <p>Your trusted online tools platform</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NenoTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initResizer();
+        });
+
+        function resetConverter() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

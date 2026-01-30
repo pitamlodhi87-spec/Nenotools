@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NenoTools Setup Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        h2 {
+            color: #6366f1;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ec4899;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #ec4899;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .tool-item {
+            background: #f8fafc;
+            border-left: 4px solid #6366f1;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .tool-item h4 {
+            color: #6366f1;
+            margin-bottom: 5px;
+        }
+        .tool-item p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        .feature-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f0f9ff;
+            border-radius: 6px;
+            border-left: 3px solid #10b981;
+            color: #1e293b;
+        }
+        .feature-list li::before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .highlight {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            background: #6366f1;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: #ec4899;
+            transform: translateY(-2px);
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #fce7f3 100%);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6366f1;
+        }
+        .stat-label {
+            color: #64748b;
+            margin-top: 5px;
+        }
+        footer {
+            background: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 NenoTools Setup Guide</h1>
+            <p>Your Ultimate Online Tools Platform</p>
+        </div>
+
+        <div class="content">
+            <h2>📋 Project Overview</h2>
+            <p>NenoTools is a complete, modern web-based tools platform featuring 8 different utilities for image conversion, compression, resizing, and QR code generation. Everything is built with modern HTML5, CSS3, and vanilla JavaScript with a beautiful UI/UX design.</p>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Tools Included</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">13</div>
+                    <div class="stat-label">Project Files</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Client-Side</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Dependencies</div>
+                </div>
+            </div>
+
+            <h2>🛠️ Available Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h4>PNG to JPG</h4>
+                    <p>Convert PNG images to JPG format with quality control</p>
+                </div>
+                <div class="tool-item">
+                    <h4>JPG to PNG</h4>
+                    <p>Convert JPG images to PNG with transparency support</p>
+                </div>
+                <div class="tool-item">
+                    <h4>PNG to PDF</h4>
+                    <p>Convert PNG images to PDF documents</p>
+                </div>
+                <div class="tool-item">
+                    <h4>JPG to PDF</h4>
+                    <p>Convert JPG images to PDF documents</p>
+                </div>
+                <div class="tool-item">
+                    <h4>Image Compressor</h4>
+                    <p>Compress images while maintaining quality</p>
+                </div>
+                <div class="tool-item">
+                    <h4>Resize Image</h4>
+                    <p>Resize images to custom dimensions</p>
+                </div>
+                <div class="tool-item">
+                    <h4>PDF to Image</h4>
+                    <p>Convert PDF pages to PNG or JPG</p>
+                </div>
+                <div class="tool-item">
+                    <h4>QR Code Generator</h4>
+                    <p>Generate QR codes from text or URLs</p>
+                </div>
+            </div>
+
+            <h2>✨ Key Features</h2>
+            <ul class="feature-list">
+                <li>Modern gradient-based design with smooth animations</li>
+                <li>Fully responsive (desktop, tablet, mobile)</li>
+                <li>Dark mode support with CSS preferences</li>
+                <li>100% client-side processing (secure & private)</li>
+                <li>Drag & drop file uploads</li>
+                <li>Real-time preview of conversions</li>
+                <li>No file size limitations</li>
+                <li>No server uploads or data tracking</li>
+                <li>Beautiful UI/UX with hover effects</li>
+                <li>Mobile-friendly touch controls</li>
+            </ul>
+
+            <h2>🚀 Quick Start</h2>
+            <h3>Option 1: Direct File Opening (Simplest)</h3>
+            <p>Simply open <strong>index.html</strong> in any modern web browser.</p>
+            <div class="code-block">
+# Just double-click index.html or right-click → Open with Browser
+            </div>
+
+            <h3>Option 2: Local Server (Recommended)</h3>
+            <p>For better compatibility, run a local server:</p>
+            
+            <h4>Using Python 3:</h4>
+            <div class="code-block">python -m http.server 8000</div>
+            
+            <h4>Using Node.js:</h4>
+            <div class="code-block">npx http-server</div>
+            
+            <h4>Using PHP:</h4>
+            <div class="code-block">php -S localhost:8000</div>
+            
+            <p>Then open: <strong>http://localhost:8000</strong> in your browser</p>
+
+            <h2>📁 Project Files</h2>
+            <div class="code-block">
+Nenotools/
+├── index.html              # Home page (start here!)
+├── png-to-jpg.html        # PNG to JPG converter
+├── jpg-to-png.html        # JPG to PNG converter
+├── png-to-pdf.html        # PNG to PDF converter
+├── jpg-to-pdf.html        # JPG to PDF converter
+├── image-compressor.html  # Image compression tool
+├── resize-image.html      # Image resizing tool
+├── pdf-to-image.html      # PDF to image converter
+├── qr-generator.html      # QR code generator
+├── styles.css             # Main stylesheet
+├── script.js              # JavaScript functionality
+├── README.md              # Full documentation
+└── QUICK_START.md         # Quick reference guide
+            </div>
+
+            <h2>🎨 Design & Customization</h2>
+            <h3>Color Scheme</h3>
+            <ul class="feature-list">
+                <li>Primary: Indigo (#6366f1)</li>
+                <li>Secondary: Pink (#ec4899)</li>
+                <li>Success: Emerald (#10b981)</li>
+                <li>Warning: Amber (#f59e0b)</li>
+                <li>Danger: Red (#ef4444)</li>
+            </ul>
+
+            <h3>To Change Colors:</h3>
+            <p>Edit the CSS variables in <strong>styles.css</strong>:</p>
+            <div class="code-block">
+:root {
+    --primary-color: #your-color;
+    --secondary-color: #your-color;
+    /* ... modify other colors */
+}
+            </div>
+
+            <h2>📱 Responsive Design</h2>
+            <ul class="feature-list">
+                <li>Desktop (1920px+): Full-width layouts, multiple columns</li>
+                <li>Tablet (768px-1024px): 2-column grids, optimized spacing</li>
+                <li>Mobile (320px-767px): Single column, touch-friendly</li>
+            </ul>
+
+            <h2>🔐 Security & Privacy</h2>
+            <div class="highlight">
+                <strong>✅ 100% Secure:</strong> All processing happens in your browser. No files are uploaded to any server. No tracking, no analytics, no data collection. Completely open source and transparent.
+            </div>
+
+            <h2>🌐 Browser Support</h2>
+            <ul class="feature-list">
+                <li>Chrome/Chromium (Latest)</li>
+                <li>Firefox (Latest)</li>
+                <li>Safari (Latest)</li>
+                <li>Edge (Latest)</li>
+            </ul>
+
+            <h2>🛠️ Technologies Used</h2>
+            <ul class="feature-list">
+                <li>HTML5 - Semantic structure</li>
+                <li>CSS3 - Modern styling with variables & animations</li>
+                <li>Vanilla JavaScript - No frameworks or dependencies</li>
+                <li>Font Awesome 6.0 - Icon library</li>
+                <li>html2pdf.js - PDF generation</li>
+                <li>PDF.js - PDF processing</li>
+                <li>QR Server API - QR code generation</li>
+            </ul>
+
+            <h2>🎓 How to Extend the Platform</h2>
+            <h3>Adding a New Tool:</h3>
+            <ol style="margin-left: 20px; margin-top: 10px;">
+                <li>Create a new HTML file (e.g., <code>my-tool.html</code>)</li>
+                <li>Copy the structure from an existing tool page</li>
+                <li>Modify the HTML and JavaScript for your tool</li>
+                <li>Add the tool card to <code>index.html</code></li>
+                <li>Link it in the navigation</li>
+            </ol>
+
+            <h2>📖 Documentation Files</h2>
+            <ul class="feature-list">
+                <li><strong>README.md</strong> - Complete documentation</li>
+                <li><strong>QUICK_START.md</strong> - Quick reference guide</li>
+                <li><strong>This file</strong> - Setup and overview</li>
+            </ul>
+
+            <h2>⚡ Performance</h2>
+            <ul class="feature-list">
+                <li>All processing is instant (client-side)</li>
+                <li>Images cached in browser memory</li>
+                <li>No server calls needed</li>
+                <li>Lightweight CSS (optimized for speed)</li>
+                <li>Fast loading times</li>
+            </ul>
+
+            <h2>📞 Troubleshooting</h2>
+            <h3>Files not converting?</h3>
+            <ul style="margin-left: 20px;">
+                <li>Ensure your browser is up-to-date</li>
+                <li>Check browser console for errors (Press F12)</li>
+                <li>Try a different file format</li>
+            </ul>
+
+            <h3>Large files slow?</h3>
+            <ul style="margin-left: 20px;">
+                <li>Reduce file size first using compressor</li>
+                <li>Use lower quality settings</li>
+                <li>Try a different browser</li>
+            </ul>
+
+            <h2>🎯 Next Steps</h2>
+            <ol style="margin-left: 20px; margin-top: 15px;">
+                <li>Open <strong>index.html</strong> in your browser</li>
+                <li>Explore all 8 tools</li>
+                <li>Read <strong>README.md</strong> for detailed documentation</li>
+                <li>Customize colors and styling as needed</li>
+                <li>Add more tools following the existing patterns</li>
+            </ol>
+
+            <div class="highlight" style="margin-top: 40px;">
+                <p style="margin: 0;">
+                    <strong>Ready to get started?</strong> Open <strong>index.html</strong> in your browser now!
+                </p>
+                <a href="index.html" class="button">Open NenoTools</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>NenoTools © 2024 - Your Ultimate Online Tools Platform</p>
+            <p>Made with ❤️ for productivity and simplicity</p>
+        </footer>
+    </div>
+</body>
+</html>

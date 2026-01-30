@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compressor - NenoTools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-toolbox"></i>
+                <span>NenoTools</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="converter-container">
+        <div class="converter-header">
+            <h1>Image Compressor</h1>
+            <p>Reduce image file size without losing quality</p>
+        </div>
+
+        <div class="converter-card">
+            <div class="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    <h3>Click to upload or drag and drop</h3>
+                    <p>PNG, JPG, JPEG, GIF, WEBP (Max 50MB)</p>
+                </div>
+                <input type="file" class="file-input" accept="image/*">
+            </div>
+
+            <div class="error"><p>Error message</p></div>
+            <div class="success"><p>Success message</p></div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="quality">Compression Level</label>
+                    <input type="range" id="quality" name="quality" min="10" max="95" value="70">
+                    <small style="color: var(--text-secondary);">Quality: <span id="qualityValue">70</span>%</small>
+                </div>
+                <div class="control-group">
+                    <label for="format">Output Format</label>
+                    <select id="format" name="format">
+                        <option value="jpeg">JPEG</option>
+                        <option value="png">PNG</option>
+                        <option value="webp">WebP</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Compressing your image...</p>
+            </div>
+
+            <div class="preview-area"></div>
+
+            <div class="result-area">
+                <h3><i class="fas fa-check-circle"></i> Compression Complete!</h3>
+                <p id="sizeInfo">Your image has been successfully compressed</p>
+                <button class="btn btn-upload compress-btn">Compress</button>
+                <button class="btn btn-upload download-btn" style="margin-top: 1rem;">Download</button>
+            </div>
+
+            <div class="button-group" id="buttonGroup">
+                <button class="btn btn-primary compress-btn">Compress Image</button>
+                <button class="btn btn-secondary" onclick="resetConverter()">Reset</button>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> About Image Compression</h4>
+                <p>Reduce your image file sizes for faster loading and easier sharing. Our compression algorithm maintains visual quality while significantly reducing file size. Perfect for web optimization, email attachments, and storage savings.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NenoTools</h4>
+                    <p>Your trusted online tools platform</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NenoTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        class ImageCompressor {
+            constructor() {
+                this.uploadArea = document.querySelector('.upload-area');
+                this.fileInput = document.querySelector('.file-input');
+                this.previewArea = document.querySelector('.preview-area');
+                this.resultArea = document.querySelector('.result-area');
+                this.loadingArea = document.querySelector('.loading');
+                this.errorArea = document.querySelector('.error');
+                this.successArea = document.querySelector('.success');
+                this.compressBtn = document.querySelector('.compress-btn');
+                this.downloadBtn = document.querySelector('.download-btn');
+                this.qualityInput = document.querySelector('[name="quality"]');
+                this.formatSelect = document.querySelector('[name="format"]');
+                this.qualityValue = document.getElementById('qualityValue');
+                this.sizeInfo = document.getElementById('sizeInfo');
+                this.selectedFile = null;
+                this.compressedData = null;
+                this.originalSize = 0;
+
+                this.init();
+            }
+
+            init() {
+                this.uploadArea.addEventListener('click', () => this.fileInput.click());
+                this.uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.uploadArea.classList.add('drag-over');
+                });
+                this.uploadArea.addEventListener('dragleave', () => this.uploadArea.classList.remove('drag-over'));
+                this.uploadArea.addEventListener('drop', (e) => this.handleDrop(e));
+                this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+                this.compressBtn.addEventListener('click', () => this.compress());
+                this.downloadBtn.addEventListener('click', () => this.download());
+                this.qualityInput.addEventListener('input', (e) => {
+                    this.qualityValue.textContent = e.target.value;
+                });
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.uploadArea.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    this.fileInput.files = files;
+                    this.handleFileSelect({ target: { files } });
+                }
+            }
+
+            handleFileSelect(e) {
+                const files = e.target.files;
+                if (files.length > 0) {
+                    this.selectedFile = files[0];
+                    this.originalSize = this.selectedFile.size;
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            this.previewArea.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+                            const uploadText = this.uploadArea.querySelector('.upload-text');
+                            uploadText.innerHTML = `<h3>✓ File Selected</h3><p>${this.selectedFile.name} (${this.formatFileSize(this.originalSize)})</p>`;
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(this.selectedFile);
+                }
+            }
+
+            compress() {
+                if (!this.selectedFile) {
+                    this.showError('Please select an image');
+                    return;
+                }
+
+                this.loadingArea.classList.add('active');
+
+                setTimeout(() => {
+                    try {
+                        const img = this.previewArea.querySelector('img');
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const quality = this.qualityInput.value / 100;
+                        const format = this.formatSelect.value;
+
+                        const imageObj = new Image();
+                        imageObj.onload = () => {
+                            canvas.width = imageObj.width;
+                            canvas.height = imageObj.height;
+                            ctx.drawImage(imageObj, 0, 0);
+
+                            this.compressedData = canvas.toDataURL(`image/${format}`, quality);
+                            
+                            // Calculate compressed size
+                            const compressedSize = this.compressedData.length * 0.75; // Approximate
+                            const savedSize = this.originalSize - compressedSize;
+                            const savedPercent = ((savedSize / this.originalSize) * 100).toFixed(1);
+
+                            this.sizeInfo.innerHTML = `
+                                Original: ${this.formatFileSize(this.originalSize)}<br>
+                                Compressed: ${this.formatFileSize(compressedSize)}<br>
+                                Saved: ${this.formatFileSize(savedSize)} (${savedPercent}%)
+                            `;
+
+                            this.previewArea.innerHTML = `<img src="${this.compressedData}" alt="Compressed">`;
+                            this.loadingArea.classList.remove('active');
+                            this.showSuccess('Image compressed successfully!');
+                            this.resultArea.classList.add('active');
+                            document.getElementById('buttonGroup').style.display = 'none';
+                        };
+                        imageObj.src = img.src;
+                    } catch (error) {
+                        this.showError('Compression failed: ' + error.message);
+                    }
+                }, 500);
+            }
+
+            download() {
+                if (!this.compressedData) return;
+                const link = document.createElement('a');
+                link.href = this.compressedData;
+                link.download = `compressed.${this.formatSelect.value}`;
+                link.click();
+            }
+
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB'];
+                const i = Math.floor(Math.log(bytes, k));
+                return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+            }
+
+            showError(message) {
+                this.errorArea.querySelector('p').textContent = message;
+                this.errorArea.classList.add('active');
+            }
+
+            showSuccess(message) {
+                this.successArea.querySelector('p').textContent = message;
+                this.successArea.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new ImageCompressor();
+        });
+
+        function resetConverter() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

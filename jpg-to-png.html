@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPG to PNG Converter - NenoTools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-toolbox"></i>
+                <span>NenoTools</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#tools">Tools</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="converter-container">
+        <div class="converter-header">
+            <h1>JPG to PNG Converter</h1>
+            <p>Convert JPG images to PNG format with transparency support</p>
+        </div>
+
+        <div class="converter-card">
+            <div class="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    <h3>Click to upload or drag and drop</h3>
+                    <p>JPG, JPEG, PNG, GIF, WEBP (Max 50MB)</p>
+                </div>
+                <input type="file" class="file-input" accept="image/*">
+            </div>
+
+            <div class="error"><p>Error message</p></div>
+            <div class="success"><p>Success message</p></div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="compression">Compression Level</label>
+                    <input type="range" id="compression" name="compression" min="1" max="9" value="6">
+                    <small style="color: var(--text-secondary);">Level: <span id="compressionValue">6</span>/9</small>
+                </div>
+            </div>
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Converting your image...</p>
+            </div>
+
+            <div class="preview-area"></div>
+
+            <div class="result-area">
+                <h3><i class="fas fa-check-circle"></i> Conversion Complete!</h3>
+                <p>Your image has been successfully converted to PNG format</p>
+                <button class="btn btn-upload convert-btn">Convert</button>
+                <button class="btn btn-upload download-btn" style="margin-top: 1rem;">Download</button>
+            </div>
+
+            <div class="button-group" id="buttonGroup">
+                <button class="btn btn-primary convert-btn">Convert to PNG</button>
+                <button class="btn btn-secondary" onclick="resetConverter()">Reset</button>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> About JPG to PNG Conversion</h4>
+                <p>PNG format offers lossless compression and supports transparency, making it ideal for graphics, logos, and images that need transparent backgrounds. Converting from JPG to PNG preserves quality while allowing transparency support.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NenoTools</h4>
+                    <p>Your trusted online tools platform</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NenoTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const compressionInput = document.querySelector('[name="compression"]');
+        const compressionValue = document.getElementById('compressionValue');
+        compressionInput.addEventListener('input', (e) => {
+            compressionValue.textContent = e.target.value;
+        });
+
+        function resetConverter() {
+            document.querySelector('.file-input').value = '';
+            document.querySelector('.upload-text').innerHTML = '<h3>Click to upload or drag and drop</h3><p>JPG, JPEG, PNG, GIF, WEBP (Max 50MB)</p>';
+            document.querySelector('.preview-area').innerHTML = '';
+            document.querySelector('.result-area').classList.remove('active');
+            document.querySelector('.error').classList.remove('active');
+            document.querySelector('.success').classList.remove('active');
+        }
+
+        const resultArea = document.querySelector('.result-area');
+        const buttonGroup = document.getElementById('buttonGroup');
+        const observer = new MutationObserver(() => {
+            if (resultArea.classList.contains('active')) {
+                buttonGroup.style.display = 'none';
+            } else {
+                buttonGroup.style.display = 'flex';
+            }
+        });
+        observer.observe(resultArea, { attributes: true });
+    </script>
+</body>
+</html>
