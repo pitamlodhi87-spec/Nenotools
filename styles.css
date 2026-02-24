@@ -16,7 +16,36 @@
     --radius: 12px;
     --transition: all 0.3s ease;
 }
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s;
+}
+.theme-toggle-btn:hover {
+    color: var(--secondary-color);
+}
 
+/* Dark Mode - root override via class */
+body.dark-mode {
+    --dark-bg: #1e293b;
+    --light-bg: #0f172a;
+    --card-bg: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border-color: #334155;
+    background-color: var(--light-bg);
+    color: var(--text-primary);
+}
+/* Optional: Switch theme icon in button */
+body.dark-mode #theme-toggle .fa-moon { display: none; }
+body.dark-mode #theme-toggle .fa-sun { display: inline; }
+#theme-toggle .fa-sun { display: none; }
+body.dark-mode #theme-toggle .fa-sun { display: inline; }
 /* Reset & Base Styles */
 * {
     margin: 0;
