@@ -5,7 +5,33 @@ function scrollToTools() {
         toolsSection.scrollIntoView({ behavior: 'smooth' });
     }
 }
+// --- Dark/Light Mode Toggle ---
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    // icon swap
+    if (themeToggle) {
+        // Add sun icon for switching indicator (if not already)
+        if (!themeToggle.querySelector('.fa-sun')) {
+            const sunIcon = document.createElement('i');
+            sunIcon.className = 'fas fa-sun';
+            themeToggle.appendChild(sunIcon);
+        }
 
+        // State restore
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+});
 // Converter Base Class
 class FileConverter {
     constructor(config) {
